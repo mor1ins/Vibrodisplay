@@ -1,4 +1,6 @@
 from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import Qt
+from Model import Direct
 
 
 class Presenter(object):
@@ -6,21 +8,18 @@ class Presenter(object):
         self.model = demo_model
         self.view = demo_view
 
-        self.view.buttonClickEvent.connect(self.model.move_platform)
+        self.view.keyUpPressed.connect(
+            lambda: self.model.gamer_platform.move(Direct.get_up_direct())
+        )
+        self.view.keyDownPressed.connect(
+            lambda: self.model.gamer_platform.move(Direct.get_down_direct())
+        )
+
+        self.model.updateView.connect(self.view.update_field)
         self.model.gameOverSignal.connect(self.stop_game)
 
+        self.view.ready.connect(self.model.start_game)
         self.view.show()
 
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.update_display)
-        self.timer.start(5)
-
-    def update_display(self):
-        self.model.update_display()
-        self.view.update_field(self.model.field)
-        self.view.update_display()
-
     def stop_game(self):
-        self.timer.stop()
-
-
+        pass
