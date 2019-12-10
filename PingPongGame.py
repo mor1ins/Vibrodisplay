@@ -17,13 +17,7 @@ class Demo(QtWidgets.QMainWindow):
         self.demo_view = View()
         self.demo_model = Model()
 
-        layout = QtWidgets.QGridLayout(self)
-        layout.addWidget(self.demo_view, 1, 1)
-        self.setLayout(layout)
-        self.show()
-
         self.presenter = Presenter(self.demo_view, self.demo_model)
-        self.setWindowTitle("Ping Pong")
 
 
 def qapp():

@@ -9,6 +9,8 @@ class Presenter(object):
         self.view.buttonClickEvent.connect(self.model.move_platform)
         self.model.gameOverSignal.connect(self.stop_game)
 
+        self.view.show()
+
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_display)
         self.timer.start(5)

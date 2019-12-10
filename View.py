@@ -18,11 +18,8 @@ class View(QtWidgets.QWidget):
         layout = QtWidgets.QGridLayout(self)
         layout.addWidget(self.image_view, 1, 1)
 
-        self.installEventFilter(self)
-
         self.setLayout(layout)
         self.update_display()
-        self.show()
 
     def clear_field(self):
         for x in range(self.field.width()):
@@ -42,7 +39,6 @@ class View(QtWidgets.QWidget):
         self.image_view.setAlignment(QtCore.Qt.AlignCenter)
         self.image_view.setScaledContents(True)
         self.image_view.setMinimumSize(self.width * 50, self.height * 50)
-        self.image_view.show()
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Up or event.key() == QtCore.Qt.Key_Down:
