@@ -184,8 +184,6 @@ class Platform(QtCore.QObject):
         return [pixel.get_position() for pixel in self.pixels]
 
     def intersect(self, x, y):
-        inner = len(list(filter(lambda p: p.x == x and p.y == y, self.pixels))) > 0
-
         return len(list(filter(lambda p: p.x == x and p.y == y, self.pixels))) > 0
 
     def move(self, direction: Direct):

@@ -51,7 +51,7 @@ class View(QtWidgets.QWidget):
             self.keyUpPressed.emit()
         elif event.key() == QtCore.Qt.Key_Down:
             self.keyDownPressed.emit()
-        elif event.key() == QtCore.Qt.Key_Enter:
+        elif event.key() == QtCore.Qt.Key_Space:
             self.ready.emit()
 
 
