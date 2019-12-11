@@ -1,3 +1,3 @@
 class Config:
-    WIDTH = 8
-    HEIGHT = 5
+    WIDTH = 9
+    HEIGHT = 7

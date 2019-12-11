@@ -11,15 +11,21 @@ class Presenter(object):
         self.view.keyUpPressed.connect(
             lambda: self.model.gamer_platform.move(Direct.get_up_direct())
         )
+
         self.view.keyDownPressed.connect(
             lambda: self.model.gamer_platform.move(Direct.get_down_direct())
         )
 
-        self.model.updateView.connect(self.view.update_field)
+        self.view.keySpacePressed.connect(self.start_game)
         self.model.gameOverSignal.connect(self.stop_game)
 
-        self.view.ready.connect(self.model.start_game)
+        self.model.updateView.connect(self.view.update_field)
+
         self.view.show()
 
+    def start_game(self):
+        self.view.clear_display()
+        self.model.start_game()
+
     def stop_game(self):
-        pass
+        self.view.display_game_over()

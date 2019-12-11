@@ -8,13 +8,33 @@ from config import Config
 class View(QtWidgets.QWidget):
     keyUpPressed = QtCore.pyqtSignal(name="keyUpPressed")
     keyDownPressed = QtCore.pyqtSignal(name="keyDownPressed")
-    ready = QtCore.pyqtSignal(name="ready")
+    keySpacePressed = QtCore.pyqtSignal(name="keySpacePressed")
 
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+    def update_field(self, old, new):
+        pass
+
+    def display_game_over(self):
+        pass
+
+    def clear_display(self):
+        pass
+
+
+class QtVirtualDisplay(View):
     width, height = Config.WIDTH, Config.HEIGHT
     field = QImage(width, height, QImage.Format_RGB16)
 
     def __init__(self, parent=None):
-        super(View, self).__init__(parent)
+        super().__init__()
+
+        self.signal_by_key = {
+            QtCore.Qt.Key_Up: self.keyUpPressed,
+            QtCore.Qt.Key_Down: self.keyDownPressed,
+            QtCore.Qt.Key_Space: self.keySpacePressed,
+        }
 
         self.image_view = QtWidgets.QLabel()
         self.image_view.setGeometry(0, 0, self.width * 100, self.height * 100)
@@ -23,11 +43,13 @@ class View(QtWidgets.QWidget):
         layout.addWidget(self.image_view, 1, 1)
 
         self.setLayout(layout)
+        self.clear_display()
+
+    def clear_display(self):
         pixels = []
         for x in range(self.field.width()):
             for y in range(self.field.height()):
                 pixels.append((x, y))
-
         self.update_field(pixels, [])
 
     def fill(self, pixels, color):
@@ -47,14 +69,25 @@ class View(QtWidgets.QWidget):
         self.image_view.setMinimumSize(self.width * 50, self.height * 50)
 
     def keyPressEvent(self, event):
-        if event.key() == QtCore.Qt.Key_Up:
-            self.keyUpPressed.emit()
-        elif event.key() == QtCore.Qt.Key_Down:
-            self.keyDownPressed.emit()
-        elif event.key() == QtCore.Qt.Key_Space:
-            self.ready.emit()
+        if event.key() in self.signal_by_key.keys():
+            signal = self.signal_by_key[event.key()]
+            if signal is not None:
+                signal.emit()
 
+    def display_game_over(self):
+        self.clear_display()
 
+        offset = (1, 1)
 
+        end = [
+            (0, 0), (1, 0), (2, 0),     (4, 0), (5, 0), (6, 0),
+            (0, 1),                     (4, 1),         (6, 1),
+            (0, 2),         (2, 2),     (4, 2),         (6, 2),
+            (0, 3),         (2, 3),     (4, 3),         (6, 3),
+            (0, 4), (1, 4), (2, 4),     (4, 4), (5, 4), (6, 4),
+        ]
 
+        for i in range(len(end)):
+            end[i] = (end[i][0] + offset[0], end[i][1] + offset[1])
 
+        self.update_field([], end)

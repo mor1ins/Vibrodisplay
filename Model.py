@@ -64,7 +64,7 @@ class Ball(Pixel):
 
     def move(self):
         if self.x == 0:
-            self.timer.stop()
+            self.gameOverSignal.emit()
             return
 
         future_ball = self.future()
@@ -220,8 +220,9 @@ class Model(QtCore.QObject):
 
         self.gamer_platform.changedPosition.connect(self.update_view)
         self.ball.changedPosition.connect(self.update_view)
-        self.ball.gameOverSignal.connect(lambda: self.gameOverSignal.emit())
+        self.ball.gameOverSignal.connect(self.stop_game)
         self.ready = True
+        self.started_game = False
 
     def start_game(self):
         if self.ready:
@@ -230,6 +231,13 @@ class Model(QtCore.QObject):
             pixels = self.ball.get_pixels() + self.gamer_platform.get_pixels()
             self.update_view([], pixels)
             self.ball.start(Direct.get_random_diagonal_direction(), 500)
+            self.started_game = True
+
+    def stop_game(self):
+        self.started_game = False
+        self.ball.timer.stop()
+        self.gameOverSignal.emit()
 
     def update_view(self, old_pixels, new_pixels):
-        self.updateView.emit(old_pixels, new_pixels)
+        if self.started_game:
+            self.updateView.emit(old_pixels, new_pixels)
