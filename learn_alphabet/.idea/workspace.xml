@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c98e7452-4f30-4812-8bf2-33ac71c3035d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Words.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-    </list>
+    <list default="true" id="c98e7452-4f30-4812-8bf2-33ac71c3035d" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +76,7 @@
       <option name="presentableId" value="Default" />
       <updated>1576059466765</updated>
       <workItem from="1576059471675" duration="7694000" />
+      <workItem from="1576193426938" duration="53000" />
     </task>
     <servers />
   </component>
@@ -90,7 +88,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
